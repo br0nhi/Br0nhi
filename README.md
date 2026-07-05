@@ -1,6 +1,6 @@
 # Br0nhi — YouTube Monetization Analyzer skill
 
-Claude Code skill za analizu YouTube kanala **@harlibee** u odnosu na YouTube politike
+Claude Code skill za analizu YouTube kanala **@kanal** u odnosu na YouTube politike
 monetizacije (YPP), s posebnim fokusom na **inauthentic content** politiku.
 
 ## Upotreba
