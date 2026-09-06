@@ -36,21 +36,31 @@ napomeni korisniku šta se promijenilo.
 
 Pokušaj metode ovim redoslijedom (prva koja uspije):
 
-1. **YouTube Data API** — ako postoji env varijabla `YOUTUBE_API_KEY`, pokreni:
+1. **`youtube-connector-mcp` MCP alati** — ako je MCP server konfigurisan (vidi
+   `.mcp.json` u korijenu repozitorija; zahtijeva env varijablu `YOUTUBE_API_KEY`),
+   ovo je preferirana metoda jer daje strukturirane podatke bez pokretanja skripti:
+   - `youtube_get_channel` za osnovne podatke o kanalu (pretplatnici, opis, ukupni pregledi)
+   - `youtube_list_playlists` + `youtube_get_playlist` (uploads playlist) za listu videa
+   - `youtube_get_video` za detalje pojedinačnog videa (trajanje, opis, statistika, tagovi)
+   - `youtube_get_transcript` za tekst naracije (ključno za procjenu da li je skripta
+     originalno autorsko djelo ili čitanje tuđeg teksta)
+   - `youtube_get_comments` za signale autentičnosti (komentari o narativu, žalbe na sadržaj)
+2. **YouTube Data API skripta** — ako MCP alati nisu dostupni, a postoji env varijabla
+   `YOUTUBE_API_KEY`, pokreni:
    ```
    python3 scripts/fetch_channel.py @harlibee
    ```
    Skripta ispisuje JSON sa listom videa (naslov, opis, trajanje, datum objave, tagovi, broj pregleda).
-2. **yt-dlp** — ako je instaliran: `yt-dlp --flat-playlist -J "https://www.youtube.com/@harlibee/videos"`
-   (skripta iz tačke 1 automatski pokušava i ovaj fallback).
-3. **WebFetch/WebSearch** — dohvati stranicu kanala i /videos tab; ako je blokirano,
+3. **yt-dlp** — ako je instaliran: `yt-dlp --flat-playlist -J "https://www.youtube.com/@harlibee/videos"`
+   (skripta iz tačke 2 automatski pokušava i ovaj fallback).
+4. **WebFetch/WebSearch** — dohvati stranicu kanala i /videos tab; ako je blokirano,
    pretraži "site:youtube.com @harlibee" za listu videa.
-4. Ako ništa ne uspije, zatraži od korisnika da nalijepi listu videa (naslov + kratak opis
+5. Ako ništa ne uspije, zatraži od korisnika da nalijepi listu videa (naslov + kratak opis
    formata: narator, vrsta vizuala, dužina) i nastavi analizu na osnovu toga. NE izmišljaj
    videe koje nisi vidio.
 
 Za svaki video prikupi što više od: naslov, opis, trajanje, datum objave, thumbnail stil,
-te (ako je moguće) prirodu naracije i vizuala.
+te (ako je moguće, preko transkripta) prirodu naracije i vizuala.
 
 ### Korak 3: Analiza po videu
 
