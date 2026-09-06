@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "youtube-connector-mcp": {
+      "command": "youtube-connector-mcp",
+      "env": {
+        "YOUTUBE_API_KEY": "${YOUTUBE_API_KEY}"
+      }
+    }
+  }
+}
